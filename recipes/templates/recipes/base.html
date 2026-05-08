@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Cookbook</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fef7f0;
+            color: #3a2d1f;
+            padding-top: 80px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #8b4513;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: #fffaf0;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(139,69,19,.1);
+            overflow: hidden;
+            border: 1px solid #e8dcc0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            height: 210px;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .tag {
+            display: inline-flex;
+            background: #f4e4bc;
+            color: #8b4513;
+            padding: .25rem .75rem;
+            border-radius: 999px;
+            font-size: .9rem;
+            margin-right: .5rem;
+            margin-bottom: .5rem;
+            border: 1px solid #deb887;
+        }
+
+        .button {
+            background: #d2691e;
+            color: #fff;
+            padding: .75rem 1.2rem;
+            border: none;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .button:hover {
+            background: #b8571f;
+        }
+
+        .form-card {
+            padding: 1.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            border: 1px solid #deb887;
+            border-radius: 8px;
+            padding: .75rem;
+            margin-top: .5rem;
+            box-sizing: border-box;
+            background: #fefefe;
+        }
+
+        input[type=file] {
+            padding: .35rem;
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media(max-width: 640px) {
+            .field-row {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding-top: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div><strong>Digital Cookbook</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a class="button" href="{% url 'manage_recipe' %}">Add Recipe</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

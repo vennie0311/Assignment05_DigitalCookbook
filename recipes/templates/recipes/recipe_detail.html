@@ -1,0 +1,132 @@
+{% extends 'recipes/base.html' %}
+{% load recipe_tags %}
+
+{% block content %}
+<div class="recipe-detail">
+    <div class="recipe-header">
+        <h1>{{ recipe.title }}</h1>
+        <div class="prep-time">
+            <span class="tag">Prep Time: {{ recipe.prep_time_minutes|format_minutes }}</span>
+        </div>
+    </div>
+
+    <div class="recipe-content">
+        {% if recipe.recipe_photo %}
+            <div class="recipe-image-large">
+                <img src="{{ recipe.recipe_photo.url }}" alt="{{ recipe.title }}">
+            </div>
+        {% endif %}
+
+        <div class="recipe-info">
+            {% if recipe.description %}
+                <div class="recipe-description">
+                    <h2>Description</h2>
+                    <p>{{ recipe.description|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if recipe.ingredients.all %}
+                <div class="recipe-ingredients">
+                    <h2>Ingredients</h2>
+                    <ul class="ingredients-list">
+                        {% for ingredient in recipe.ingredients.all %}
+                            <li>{{ ingredient.quantity }} {{ ingredient.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="recipe-actions">
+        <a href="/" class="button">← Back to Recipes</a>
+        <a href="/add/" class="button">Add New Recipe</a>
+    </div>
+</div>
+
+<style>
+.recipe-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.recipe-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recipe-header h1 {
+    color: #8b4513;
+    margin-bottom: 1rem;
+}
+
+.recipe-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.recipe-image-large {
+    display: flex;
+    align-items: flex-start;
+}
+
+.recipe-image-large img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(139,69,19,.2);
+    object-fit: cover;
+}
+
+.recipe-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.recipe-description h2,
+.recipe-ingredients h2 {
+    color: #8b4513;
+    border-bottom: 2px solid #deb887;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ingredients-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e8dcc0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.ingredients-list li:last-child {
+    border-bottom: none;
+}
+
+.recipe-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+@media (max-width: 768px) {
+    .recipe-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .recipe-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+{% endblock %}

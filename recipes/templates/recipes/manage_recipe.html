@@ -1,0 +1,88 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<h1>Add a New Recipe</h1>
+<div class="card form-card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="field-row">
+            <div>
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </div>
+            <div>
+                {{ form.prep_time_minutes.label_tag }}
+                {{ form.prep_time_minutes }}
+            </div>
+        </div>
+
+        <div>
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+
+        <div>
+            {{ form.recipe_photo.label_tag }}
+            {{ form.recipe_photo }}
+        </div>
+
+        <h2>Ingredients</h2>
+        {{ formset.management_form }}
+
+        <div id="ingredient-form-list">
+            {% for ingredient_form in formset %}
+                <div class="ingredient-form card" style="margin-bottom: 1rem; padding: 1rem;">
+                    {{ ingredient_form.non_field_errors }}
+                    <div class="field-row">
+                        <div>
+                            {{ ingredient_form.name.label_tag }}
+                            {{ ingredient_form.name }}
+                        </div>
+                        <div>
+                            {{ ingredient_form.quantity.label_tag }}
+                            {{ ingredient_form.quantity }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="add-ingredient" class="button">+ Add Another Ingredient</button>
+        <br><br>
+        <button class="button" type="submit">Save Recipe</button>
+    </form>
+</div>
+
+<template id="empty-form-template">
+    <div class="ingredient-form card" style="margin-bottom: 1rem; padding: 1rem;">
+        <div class="field-row">
+            <div>
+                {{ formset.empty_form.name.label_tag }}
+                {{ formset.empty_form.name }}
+            </div>
+            <div>
+                {{ formset.empty_form.quantity.label_tag }}
+                {{ formset.empty_form.quantity }}
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.getElementById('add-ingredient');
+    const formList = document.getElementById('ingredient-form-list');
+    const totalForms = document.getElementById('id_ingredients-TOTAL_FORMS');
+    const template = document.getElementById('empty-form-template').innerHTML;
+
+    addButton.addEventListener('click', function() {
+        const formIndex = parseInt(totalForms.value);
+        const newForm = template.replace(/__prefix__/g, formIndex);
+        formList.insertAdjacentHTML('beforeend', newForm);
+        totalForms.value = formIndex + 1;
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'recipes/base.html' %}
+{% load recipe_tags %}
+
+{% block content %}
+<h1>Recipe Dashboard</h1>
+<div class="grid">
+    {% for recipe in recipes %}
+        <article class="card">
+            {% if recipe.recipe_photo %}
+                <img src="{{ recipe.recipe_photo.url }}" alt="{{ recipe.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h2><a href="/recipe/{{ recipe.id }}/" style="color: #8b4513; text-decoration: none;">{{ recipe.title }}</a></h2>
+                <div class="tag">Prep: {{ recipe.prep_time_minutes|format_minutes }}</div>
+                <p>{{ recipe.description|linebreaksbr }}</p>
+            </div>
+        </article>
+    {% empty %}
+        <p>No recipes yet. <a href="{% url 'manage_recipe' %}">Add your first recipe</a>.</p>
+    {% endfor %}
+</div>
+{% endblock %}
